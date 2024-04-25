@@ -57,7 +57,7 @@ function googleTranslateElementInit() {
 }
 
 const url =
-  "https://newsapi.org/v2/top-headlines?country=jp&apiKey=14324535cfa648328788e77a445e9c59";
+  "https://newsapi.org/v2/top-headlines?country=jp&apiKey=6c935ceb5d5d4f459a0dba249b2a561e";
 let maxCardsToShow = 4;
 let newsData = [];
 
