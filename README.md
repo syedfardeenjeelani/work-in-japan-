@@ -14,7 +14,7 @@ In the design phase, I focused on creating a visually appealing and user-friendl
 
 In the development phase, I brought the design to life using HTML, CSS, and JavaScript. Here's what I accomplished:
 
-- **Searchable Job Listings**: I implemented a searchable job listing section using JSON data for job listings in Japan. Users can search for jobs based on their preferences and view real-time job opportunities.
+- **Searchable Job Listings**: I implemented a searchable job listing section using JSON data for job listings in Japan. Users can search for jobs based on their preferences and view  job opportunities.
 
 - **Real-time News Updates**: I integrated an API to fetch real-time news updates related to work opportunities and career trends in Japan. This feature keeps users informed about the latest developments in the job market.
 
