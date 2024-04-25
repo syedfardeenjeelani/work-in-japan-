@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      .cards {
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+
+      .title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 10px;
+      }
+
+      .company {
+        font-size: 1.2rem;
+        color: #555;
+        margin-bottom: 5px;
+      }
+
+      .location {
+        font-size: 1.1rem;
+        color: #666;
+        margin-bottom: 15px;
+      }
+
+      .description {
+        font-size: 1rem;
+        color: #444;
+        line-height: 1.5;
+        margin-bottom: 15px;
+      }
+
+      .apply-link {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+      }
+
+      .apply-link:hover {
+        background-color: #0056b3;
+      }
+
+      .jobs-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.3rem;
+        width: 98vw;
+      }
+
+      /* Media query for responsiveness */
+      /* @media (max-width: 768px) {
+        .cards {
+          width: calc(50% - 20px);
+        }
+      }
+
+      @media (max-width: 576px) {
+        .cards {
+          width: calc(100% - 20px);
+        }
+      } */
+
+      .clear-icon {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 10px;
+        cursor: pointer;
+        visibility: hidden;
+      }
+
+      .search {
+        border: 1px solid grey;
+        border-radius: 5px;
+        height: 20px;
+        width: 30%;
+        padding: 2px 23px 2px 30px;
+        outline: 0;
+        background-color: #f5f5f5;
+      }
+
+      .search:hover,
+      .search:focus {
+        border: 1.5px solid #009688;
+        background-color: white;
+      }
+    </style>
+
+    <input
+      class="search"
+      placeholder="Search for the job you are looking for"
+      type="text"
+    />
+
+    <div class="jobs-container"></div>
+    <script>
+      const search_input = document.querySelector(".search");
+      const jobsContainer = document.querySelector(".jobs-container");
+      let search_term = "";
+      let maxCardsToShow = 40;
+      let newsData = [];
+
+      const url = "./job.json";
+
+      try {
+        fetch(url)
+          .then((res) => res.json())
+          .then((data) => {
+            newsData = data.results;
+            showCards(newsData);
+          });
+      } catch (error) {
+        console.error(error);
+      }
+
+      function showCards() {
+        const filteredData = newsData
+          .filter((job) =>
+            job.title.toLowerCase().includes(search_term.toLowerCase())
+          )
+          .slice(0, maxCardsToShow);
+
+        jobsContainer.innerHTML = "";
+
+        filteredData.forEach((job) => {
+          const cardDiv = document.createElement("div");
+          cardDiv.classList.add("cards");
+
+          const titleElement = document.createElement("h1");
+          titleElement.textContent = job.title;
+          titleElement.classList.add("title");
+
+          const companyElement = document.createElement("p");
+          companyElement.textContent = "Company: " + job.company.name;
+          companyElement.classList.add("company");
+
+          const locationElement = document.createElement("p");
+          locationElement.textContent = "Location: " + job.location;
+          locationElement.classList.add("location");
+
+          const descriptionElement = document.createElement("div");
+          descriptionElement.innerHTML = job.description;
+          descriptionElement.classList.add("description");
+
+          const applyLink = document.createElement("a");
+          applyLink.textContent = "Apply Now";
+          applyLink.href = job.application_url;
+          applyLink.target = "_blank";
+          applyLink.classList.add("apply-link");
+
+          cardDiv.appendChild(titleElement);
+          cardDiv.appendChild(companyElement);
+          cardDiv.appendChild(locationElement);
+          cardDiv.appendChild(descriptionElement);
+          cardDiv.appendChild(applyLink);
+
+          jobsContainer.appendChild(cardDiv);
+        });
+      }
+
+      search_input.addEventListener("input", (e) => {
+        search_term = e.target.value;
+        showCards();
+      });
+    </script>
+  </body>
+</html>
